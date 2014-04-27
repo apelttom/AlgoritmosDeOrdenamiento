@@ -51,7 +51,7 @@ public class AlgorithmAnimationFrame extends JFrame implements
     private String frameTitle;
     private int sleepTime;
     private TimeSeriesDataItem[] dataToSort;
-    JPanel MainPanel, AnimationPanel;
+    private JPanel MainPanel, AnimationPanel;
     
     /**
      * Gets an animation frame instance.
@@ -65,26 +65,24 @@ public class AlgorithmAnimationFrame extends JFrame implements
      */
     public AlgorithmAnimationFrame(String frameTitle, TimeSeriesDataItem[] dataToSort, int sleepTime) {
         super(frameTitle);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setBounds(50, 50, 1000, 500);
         this.frameTitle = frameTitle;
         this.sleepTime = sleepTime;
         this.dataToSort = dataToSort;
-        
-        
+        setResizable(false);
+        setVisible(true);
         MainPanel = new JPanel();
         setContentPane(MainPanel);
         MainPanel.setBackground(Color.GRAY);
-        MainPanel.setBounds(0, 0, 762, 404);
+        MainPanel.setBounds(0, 0, 1000, 500);
         MainPanel.setLayout(null);
-        MainPanel.setLayout(null);
-         /*
-        JPanel AnimationPanel = new JPanel();
-        AnimationPanel.setBounds(28, 71, 511, 324);
+
+ 
+        JPanel AnimationPanel = createDemoPanel();
+        AnimationPanel.setSize(new Dimension(500, 270));
         MainPanel.add(AnimationPanel);
-        */
-        JPanel jpanel = createDemoPanel();
-        jpanel.setSize(new Dimension(500, 270));
-        MainPanel.add(jpanel);
         
     }
 
@@ -135,6 +133,7 @@ public class AlgorithmAnimationFrame extends JFrame implements
         IntervalXYDataset dataSet = startDataSet(dataToSort);
         JFreeChart chart = createChart(dataSet);
         ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setLocation(40, 147);
         return chartPanel;
     }
 
