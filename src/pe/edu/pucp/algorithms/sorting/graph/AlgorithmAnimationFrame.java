@@ -28,6 +28,9 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.ui.ApplicationFrame;
 
 import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JLabel;
 
 /**
  * Frame that shows the sorting algorithm process.
@@ -76,14 +79,35 @@ public class AlgorithmAnimationFrame extends JFrame implements
         MainPanel = new JPanel();
         setContentPane(MainPanel);
         MainPanel.setBackground(Color.GRAY);
-        MainPanel.setBounds(0, 0, 1000, 500);
+        MainPanel.setBounds(0, 0, 1000, 600);
         MainPanel.setLayout(null);
 
  
+
+        
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBounds(0, 0, 1000, 25);
+        MainPanel.add(menuBar);
+        
+        JMenu mnArchivo = new JMenu("Archivo");
+        menuBar.add(mnArchivo);
+        
+        
         JPanel AnimationPanel = createDemoPanel();
         AnimationPanel.setSize(new Dimension(500, 270));
         MainPanel.add(AnimationPanel);
         
+        JLabel lblVelocidad = new JLabel("Velocidad");
+        lblVelocidad.setBounds(612, 361, 46, 14);
+        MainPanel.add(lblVelocidad);
+        
+        JLabel lblMas = new JLabel("mas");
+        lblMas.setBounds(716, 361, 46, 14);
+        MainPanel.add(lblMas);
+        
+        JLabel lblMenos = new JLabel("menos");
+        lblMenos.setBounds(716, 414, 46, 14);
+        MainPanel.add(lblMenos);
     }
 
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
@@ -173,5 +197,4 @@ public class AlgorithmAnimationFrame extends JFrame implements
         return buffer.toString();
         */
     }
-
 }
