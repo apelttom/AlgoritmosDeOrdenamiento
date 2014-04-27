@@ -1,35 +1,67 @@
 package pe.edu.pucp.algorithms.sorting.DLinkedList;
 
+import java.util.Iterator;
+
 /**
  * This is implementation of Doubly Linked List. It is using empty head element
- * and empty tail element. It has current pointer on a current element in the
- * list
+ * and empty tail element as indicators of end and start. It has also
+ * implemented an iterator which only can be used to remove elements from the
+ * list.
  * 
  * Head(empty)<------>Element1<------>....<------>Tail(empty)
- * 
- * WARNING: It still needs testing if all methods are working correctly.
  * 
  * @author Tomáš Apeltauer
  * 
  * @param <E>
  *            Type of elements stored in the list
  */
-public class DLList<E> {
+public class DLList<E> implements Iterable<E> {
 	DNode<E> head;
 	DNode<E> tail;
-	DNode<E> current;
 	int size;
 
 	/**
 	 * Constructor initializing empty head and tail. Also size and current.
 	 */
 	public DLList() {
+		initializeClean();
+	}
+
+	private void initializeClean() {
 		head = new DNode<E>(null, null, null);
 		tail = new DNode<E>(null, null, null);
 		size = 0;
 		head.setNext(tail);
 		tail.setPrev(head);
-		current = head;
+	}
+
+	/**
+	 * Checks whether specified index is in range of elements in the list.
+	 * 
+	 * @param index
+	 *            - index to be verified
+	 * @return true if index is in range of elements. False otherwise.
+	 */
+	private boolean veryfiIndex(int index) {
+		if (index >= 0 && index < size) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns pointer on the node of DLList on specified index.
+	 * 
+	 * @param index
+	 *            - for creation of the pointer.
+	 * @return pointer of type DNode<E>
+	 */
+	private DNode<E> pointToIndex(int index) {
+		DNode<E> pointer = head;
+		for (int counter = 0; counter <= index; counter++) {
+			pointer = pointer.getNext();
+		}
+		return pointer;
 	}
 
 	private DNode<E> getNext(DNode<E> node) throws IllegalStateException {
@@ -77,6 +109,22 @@ public class DLList<E> {
 	}
 
 	/**
+	 * Inserts the specified element at the specified position in this list.
+	 * Shifts the element currently at that position (if any) and any subsequent
+	 * elements to the right.
+	 * 
+	 * @param index
+	 *            where will be the new element inserted
+	 * @param element
+	 */
+	public void add(int index, E element) {
+		if (veryfiIndex(index)) {
+			DNode<E> pointer = pointToIndex(index);
+			addBefore(pointer, element);
+		}
+	}
+
+	/**
 	 * Inserts the specified element at the beginning of this list.
 	 * 
 	 * @param element
@@ -95,17 +143,37 @@ public class DLList<E> {
 	}
 
 	/**
-	 * Inserts the specified element at the specified position in this list.
-	 * Shifts the element currently at that position (if any) and any subsequent
-	 * elements to the right.
+	 * Removes all of the elements from this list.
+	 */
+	public void clear() {
+		initializeClean();
+	}
+
+	/**
+	 * Retrieves, but does not remove, the head (first element) of this list.
+	 * 
+	 * @return element from the current position
+	 */
+	public E element() {
+		if (!isEmpty()) {
+			return head.getNext().getElement();
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the element at the specified position in this list.
 	 * 
 	 * @param index
-	 *            where will be the new element inserted
-	 * @param element
+	 *            - index of the element to return
+	 * @return the element at the specified position in this list
 	 */
-	public void add(int index, E element) {
-		goToPos(index);
-		addBefore(current.getNext(), element);
+	public E get(int index) {
+		if (veryfiIndex(index)) {
+			DNode<E> pointer = this.pointToIndex(index);
+			return pointer.getElement();
+		}
+		return null;
 	}
 
 	/**
@@ -114,7 +182,7 @@ public class DLList<E> {
 	 * @param removeNode
 	 * @return
 	 */
-	private E remove(DNode<E> removeNode) {
+	E remove(DNode<E> removeNode) {
 		DNode<E> prevNode = removeNode.getPrev();
 		DNode<E> nextNode = removeNode.getNext();
 
@@ -129,94 +197,23 @@ public class DLList<E> {
 	}
 
 	/**
-	 * Remove element on specified index. Throws exception if the list is empty
-	 * or if the position is not in the range of elements in the list.
+	 * Replaces the element at the specified position in this list with the
+	 * specified element.
 	 * 
-	 * @param position
-	 * @return removed element
+	 * @param index
+	 *            - index of the element to replace
+	 * @param element
+	 *            - element to be stored at the specified position
+	 * @return the element previously at the specified position
 	 */
-	public E remove(int position) {
-		if (this.isEmpty()) {
-			throw new IllegalStateException("DLList is empty. Cannot remove.");
+	public E set(int index, E element) {
+		if (veryfiIndex(index)) {
+			DNode<E> pointer = this.pointToIndex(index);
+			E oldElement = pointer.getElement();
+			pointer.setElement(element);
+			return oldElement;
 		}
-		goToPos(position);
-		return this.remove(current.getNext());
-	}
-
-	/**
-	 * Return element on the current position. Throws exception if the list is
-	 * empty.
-	 * 
-	 * @return element from the current position
-	 */
-	public E getElement() {
-		if (isEmpty()) {
-			throw new IllegalStateException(
-					"DLList is empty. There are no elements.");
-		} else {
-			return current.getNext().getElement();
-		}
-	}
-
-	/**
-	 * @return current position in the list
-	 */
-	public int getPos() {
-		DNode<E> probe = head;
-		int counter = 0;
-		while (probe != current) {
-			probe = probe.getNext();
-			counter++;
-		}
-		return counter;
-	}
-
-	/**
-	 * Moves pointer on current item to the specified position. Throw error if
-	 * the position is not in the range of the elements in the list.
-	 * 
-	 * @param newPos
-	 *            where the pointer will be moved
-	 */
-	public void goToPos(int newPos) {
-		if (this.veryfiPosition(newPos)) {
-			this.goToStart();
-			while (this.getPos() != newPos) {
-				this.next();
-			}
-		} else {
-			throw new IndexOutOfBoundsException("Illegal position in DLList.");
-		}
-	}
-
-	/**
-	 * Moves the pointer to the start of the list.
-	 */
-	public void goToStart() {
-		current = head;
-	}
-
-	/**
-	 * Moves the pointer to the end of the list.
-	 */
-	public void goToEnd() {
-		current = tail;
-	}
-
-	/**
-	 * Moves the pointer to the NEXT element if there is any. Throw exception if
-	 * current pointer is already on the end.
-	 */
-	public void next() throws IllegalStateException {
-		this.getNext(current);
-	}
-
-	/**
-	 * Moves the pointer to the PREVIOUS element if there is any. Throw
-	 * exception if current pointer is already on the beginning.
-	 */
-	public void prev() throws IllegalStateException {
-		this.getPrev(current);
+		return null;
 	}
 
 	public int size() {
@@ -225,19 +222,6 @@ public class DLList<E> {
 
 	public boolean isEmpty() {
 		return (this.size == 0);
-	}
-
-	/**
-	 * Checks whether specified index is in range of elements in the list.
-	 * 
-	 * @param position
-	 * @return
-	 */
-	private boolean veryfiPosition(int position) {
-		if (position >= 0 && position < size) {
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -255,4 +239,15 @@ public class DLList<E> {
 		s += "]";
 		return s;
 	}
+
+	/**
+	 * Returns a list-iterator of the elements in this list (in proper
+	 * sequence), starting at the first position (head) in the list. Obeys the
+	 * general contract of Iterator.
+	 */
+	@Override
+	public Iterator<E> iterator() {
+		return new DLListIterator<E>(this);
+	}
+
 }
