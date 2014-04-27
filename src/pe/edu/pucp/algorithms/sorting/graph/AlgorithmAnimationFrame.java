@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -34,7 +35,7 @@ import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
  * @author Carlos Gavidia (cgavidia@acm.org)
  * 
  */
-public class AlgorithmAnimationFrame extends ApplicationFrame implements
+public class AlgorithmAnimationFrame extends JFrame implements
         ArrayChangeListener<CustomTimeSeriesDataItem> {
 
     private static final long serialVersionUID = -6451446062734426445L;
@@ -50,7 +51,8 @@ public class AlgorithmAnimationFrame extends ApplicationFrame implements
     private String frameTitle;
     private int sleepTime;
     private TimeSeriesDataItem[] dataToSort;
-
+    JPanel MainPanel, AnimationPanel;
+    
     /**
      * Gets an animation frame instance.
      * 
@@ -61,29 +63,39 @@ public class AlgorithmAnimationFrame extends ApplicationFrame implements
      * @param sleepTime
      *            Delay time for sorting.
      */
-    public AlgorithmAnimationFrame(String frameTitle,
-            TimeSeriesDataItem[] dataToSort, int sleepTime) {
+    public AlgorithmAnimationFrame(String frameTitle, TimeSeriesDataItem[] dataToSort, int sleepTime) {
         super(frameTitle);
+        setBounds(50, 50, 1000, 500);
         this.frameTitle = frameTitle;
         this.sleepTime = sleepTime;
         this.dataToSort = dataToSort;
+        
+        
+        MainPanel = new JPanel();
+        setContentPane(MainPanel);
+        MainPanel.setBackground(Color.GRAY);
+        MainPanel.setBounds(0, 0, 762, 404);
+        MainPanel.setLayout(null);
+        MainPanel.setLayout(null);
+         /*
+        JPanel AnimationPanel = new JPanel();
+        AnimationPanel.setBounds(28, 71, 511, 324);
+        MainPanel.add(AnimationPanel);
+        */
         JPanel jpanel = createDemoPanel();
-        jpanel.setPreferredSize(new Dimension(500, 270));
-        setContentPane(jpanel);
+        jpanel.setSize(new Dimension(500, 270));
+        MainPanel.add(jpanel);
+        
     }
 
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
-        JFreeChart jfreechart = ChartFactory.createXYBarChart(frameTitle,
-                X_LABEL, true, Y_LABEL, intervalxydataset,
-                PlotOrientation.VERTICAL, true, false, false);
-        jfreechart.addSubtitle(new TextTitle(SUB_TITLE, new Font("Dialog", 2,
-                10)));
+        JFreeChart jfreechart = ChartFactory.createXYBarChart(frameTitle, X_LABEL, true, Y_LABEL, intervalxydataset, PlotOrientation.VERTICAL, true, false, false);
+        jfreechart.addSubtitle(new TextTitle(SUB_TITLE, new Font("Dialog", 2, 10)));
         jfreechart.setBackgroundPaint(Color.white);
+        
         XYPlot xyplot = (XYPlot) jfreechart.getPlot();
         XYBarRenderer xybarrenderer = (XYBarRenderer) xyplot.getRenderer();
-        StandardXYToolTipGenerator standardxytooltipgenerator = new StandardXYToolTipGenerator(
-                "{1} = {2}", new SimpleDateFormat("yyyy"), new DecimalFormat(
-                        "0"));
+        StandardXYToolTipGenerator standardxytooltipgenerator = new StandardXYToolTipGenerator("{1} = {2}", new SimpleDateFormat("yyyy"), new DecimalFormat("0"));
         xybarrenderer.setBaseToolTipGenerator(standardxytooltipgenerator);
         xybarrenderer.setMargin(0.10000000000000001D);
         xyplot.setBackgroundPaint(Color.lightGray);
@@ -100,8 +112,7 @@ public class AlgorithmAnimationFrame extends ApplicationFrame implements
         for (TimeSeriesDataItem dataItem : dataAsArray) {
             timeSeries.add(dataItem);
         }
-        TimeSeriesCollection timeseriescollection = new TimeSeriesCollection(
-                timeSeries);
+        TimeSeriesCollection timeseriescollection = new TimeSeriesCollection(timeSeries);
         return timeseriescollection;
     }
 
@@ -155,10 +166,13 @@ public class AlgorithmAnimationFrame extends ApplicationFrame implements
      */
     @Override
     public String toString() {
+    	return "";
+    	/*
         StringBuffer buffer = new StringBuffer();
         buffer.append(ARRAY_SIZE_LABEL + dataToSort.length + "\n");
         buffer.append(SLEEP_TIME_LABEL + sleepTime);
         return buffer.toString();
+        */
     }
 
 }

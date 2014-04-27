@@ -41,8 +41,7 @@ public class SortingAlgorithmDemoLauncher {
         int sleepTime = getSleepTime();
         CustomTimeSeriesDataItem[] dataToSort = getDataToSort();
 
-        AlgorithmAnimationFrame algorithmAnimationFrame = new AlgorithmAnimationFrame(
-                TITLE + ": " + selectedAlgoritm.name(), dataToSort, sleepTime);
+        AlgorithmAnimationFrame algorithmAnimationFrame = new AlgorithmAnimationFrame(TITLE + ": " + selectedAlgoritm.name(), dataToSort, sleepTime);
         algorithmAnimationFrame.pack();
         RefineryUtilities.centerFrameOnScreen(algorithmAnimationFrame);
         algorithmAnimationFrame.setVisible(true);
