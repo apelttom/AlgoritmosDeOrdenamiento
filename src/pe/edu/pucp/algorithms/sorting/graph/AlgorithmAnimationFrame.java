@@ -2,7 +2,6 @@ package pe.edu.pucp.algorithms.sorting.graph;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
@@ -19,18 +18,24 @@ import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
 import org.jfree.data.time.Year;
 import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.ui.ApplicationFrame;
 
 import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
+
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JMenuItem;
 
 /**
  * Frame that shows the sorting algorithm process.
@@ -38,14 +43,9 @@ import javax.swing.JLabel;
  * @author Carlos Gavidia (cgavidia@acm.org)
  * 
  */
-public class AlgorithmAnimationFrame extends JFrame implements
-        ArrayChangeListener<CustomTimeSeriesDataItem> {
+@SuppressWarnings("serial")
+public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListener<CustomTimeSeriesDataItem>, ActionListener {
 
-    private static final long serialVersionUID = -6451446062734426445L;
-
-    private static final String SLEEP_TIME_LABEL = "Tiempo de pausa (milisegundos): ";
-    private static final String ARRAY_SIZE_LABEL = "Número de elementos: ";
-    private static final String SUB_TITLE = "PUCP - Maestría en Informática";
     private static final String X_LABEL = "Índice";
     private static final String Y_LABEL = "Tamaño";
     private static final String BAR_LABEL = "Elemento en el arreglo";
@@ -55,6 +55,10 @@ public class AlgorithmAnimationFrame extends JFrame implements
     private int sleepTime;
     private TimeSeriesDataItem[] dataToSort;
     private JPanel MainPanel, AnimationPanel;
+    
+    private JButton Bubble,Insertion, Merge, Quick, btMas;
+    private JLabel lblAlgoritmosDeOrdenamiento;
+    private JMenuItem mntmSalir;
     
     /**
      * Gets an animation frame instance.
@@ -70,7 +74,7 @@ public class AlgorithmAnimationFrame extends JFrame implements
         super(frameTitle);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
-        setBounds(50, 50, 1000, 500);
+        setBounds(50, 50, 920, 500);
         this.frameTitle = frameTitle;
         this.sleepTime = sleepTime;
         this.dataToSort = dataToSort;
@@ -78,13 +82,11 @@ public class AlgorithmAnimationFrame extends JFrame implements
         setVisible(true);
         MainPanel = new JPanel();
         setContentPane(MainPanel);
-        MainPanel.setBackground(Color.GRAY);
+        MainPanel.setBackground(Color.LIGHT_GRAY);
         MainPanel.setBounds(0, 0, 1000, 600);
         MainPanel.setLayout(null);
 
  
-
-        
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBounds(0, 0, 1000, 25);
         MainPanel.add(menuBar);
@@ -92,27 +94,57 @@ public class AlgorithmAnimationFrame extends JFrame implements
         JMenu mnArchivo = new JMenu("Archivo");
         menuBar.add(mnArchivo);
         
-        
-        JPanel AnimationPanel = createDemoPanel();
-        AnimationPanel.setSize(new Dimension(500, 270));
-        MainPanel.add(AnimationPanel);
-        
+        mntmSalir = new JMenuItem("Salir");
+        mnArchivo.add(mntmSalir);
+
         JLabel lblVelocidad = new JLabel("Velocidad");
-        lblVelocidad.setBounds(612, 361, 46, 14);
+        lblVelocidad.setBounds(614, 309, 118, 32);
         MainPanel.add(lblVelocidad);
-        
-        JLabel lblMas = new JLabel("mas");
-        lblMas.setBounds(716, 361, 46, 14);
-        MainPanel.add(lblMas);
         
         JLabel lblMenos = new JLabel("menos");
         lblMenos.setBounds(716, 414, 46, 14);
         MainPanel.add(lblMenos);
+        
+        creaBotones();
+        lblAlgoritmosDeOrdenamiento = new JLabel("Algoritmos de Ordenamiento Disponibles");
+        lblAlgoritmosDeOrdenamiento.setBounds(614, 36, 317, 43);
+        MainPanel.add(lblAlgoritmosDeOrdenamiento);
+        
+        AnimationPanel = createDemoPanel();
+        AnimationPanel.setSize(new Dimension(555, 383));
+        MainPanel.add(AnimationPanel);
+    }
+    
+    private void creaBotones(){
+        Bubble = new JButton("Bubble");
+        Bubble.setBounds(672, 114, 159, 25);
+        Bubble.addActionListener(this);
+        MainPanel.add(Bubble);
+        
+        Insertion = new JButton("Insertion");
+        Insertion.setBounds(672, 169, 159, 25);
+        Insertion.addActionListener(this);
+        MainPanel.add(Insertion);
+        
+        Merge = new JButton("Merge");
+        Merge.setBounds(672, 222, 159, 25);
+        Merge.addActionListener(this);
+        MainPanel.add(Merge);
+        
+        Quick = new JButton("Quick");
+        Quick.setBounds(672, 273, 159, 25);
+        Quick.addActionListener(this);
+        MainPanel.add(Quick);
+        
+        btMas = new JButton("");
+        btMas.setBounds(716, 352, 45, 43);
+        btMas.setIcon(new ImageIcon(AlgorithmAnimationFrame.class.getResource("/images/mas.png")));
+        MainPanel.add(btMas);
+    	
     }
 
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
         JFreeChart jfreechart = ChartFactory.createXYBarChart(frameTitle, X_LABEL, true, Y_LABEL, intervalxydataset, PlotOrientation.VERTICAL, true, false, false);
-        jfreechart.addSubtitle(new TextTitle(SUB_TITLE, new Font("Dialog", 2, 10)));
         jfreechart.setBackgroundPaint(Color.white);
         
         XYPlot xyplot = (XYPlot) jfreechart.getPlot();
@@ -157,7 +189,8 @@ public class AlgorithmAnimationFrame extends JFrame implements
         IntervalXYDataset dataSet = startDataSet(dataToSort);
         JFreeChart chart = createChart(dataSet);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setLocation(40, 147);
+        chartPanel.setBackground(Color.LIGHT_GRAY);
+        chartPanel.setLocation(22, 64);
         return chartPanel;
     }
 
@@ -197,4 +230,10 @@ public class AlgorithmAnimationFrame extends JFrame implements
         return buffer.toString();
         */
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

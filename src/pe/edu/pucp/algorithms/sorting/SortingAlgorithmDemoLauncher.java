@@ -30,52 +30,28 @@ public class SortingAlgorithmDemoLauncher {
     private static final String APPLICATION_TITLE = "Demo: Algoritmos de Ordenamiento";
     private static final String SELECT_SORTING_ALGORITHM = "Seleccione el algoritmo de ordenamiento (del 0 al 5):";
     private static final String EXECUTION_TIME_MESSAGE = "Tiempo de ejecución del algoritmo (segundos): ";
-    private static final String SELECT_SLEEP_TIME = "Seleccione el tiempo de pausa para cada paso del algoritmo (en milisegundos):";
     private static final String SELECT_NUMBER_OF_ITEMS = "Seleccione el número de elementos a ordenar:";
-    private static final String STARTING_EXECUTION = "Ejecución en proceso:";
-    private static final String ALGORITHM_LABEL = "Algoritmo: ";
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        SortingAlgorithm selectedAlgoritm = getSelectedAlgorithm();
-        int sleepTime = getSleepTime();
-        CustomTimeSeriesDataItem[] dataToSort = getDataToSort();
-
-        AlgorithmAnimationFrame algorithmAnimationFrame = new AlgorithmAnimationFrame(TITLE + ": " + selectedAlgoritm.name(), dataToSort, sleepTime);
-        //algorithmAnimationFrame.pack();
-       // RefineryUtilities.centerFrameOnScreen(algorithmAnimationFrame);
+        SortingAlgorithm selectedAlgoritm = getSelectedAlgorithm();  // Algorithm Input
+        int sleepTime = 10; // Thread Sleep
+        CustomTimeSeriesDataItem[] dataToSort = getDataToSort(); // This fill the data 
+        
+        // creates the JPanel that animates the sorting algorithm
+        AlgorithmAnimationFrame algorithmAnimationFrame = new AlgorithmAnimationFrame(selectedAlgoritm.name(), dataToSort, sleepTime); 
         algorithmAnimationFrame.setVisible(true);
-        BaseSorter<CustomTimeSeriesDataItem> sorter = SorterFactory.getSorter(
-                CustomTimeSeriesDataItem.class, dataToSort, selectedAlgoritm);
+        BaseSorter<CustomTimeSeriesDataItem> sorter = SorterFactory.getSorter(CustomTimeSeriesDataItem.class, dataToSort, selectedAlgoritm);
         sorter.setArrayChangeListener(algorithmAnimationFrame);
 
         long startTime = System.nanoTime();
-        System.out.println(STARTING_EXECUTION);
-        System.out.println(HORIZONTAL_LINE);
-        System.out.println(ALGORITHM_LABEL + selectedAlgoritm.name());
-        System.out.println(algorithmAnimationFrame);
-        System.out.println();
 
         String message = sorter.sortAndShowResults();
         System.out.println(message);
+        
         long endTime = System.nanoTime();
-        double durationInSeconds = TimeUnit.SECONDS.convert(
-                endTime - startTime, TimeUnit.NANOSECONDS);
+        double durationInSeconds = TimeUnit.SECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
         System.out.println(EXECUTION_TIME_MESSAGE + durationInSeconds);
-    }
-
-    private static int getSleepTime() {
-        int sleepTime = 0;
-        while (sleepTime == 0) {
-            try {
-                System.out.println(SELECT_SLEEP_TIME);
-                Scanner keyBoardInput = new Scanner(System.in);
-                sleepTime = keyBoardInput.nextInt();
-            } catch (Exception e) {
-                System.out.println(INVALID_INPUT);
-            }
-        }
-        return sleepTime;
     }
 
     private static SortingAlgorithm getSelectedAlgorithm() {
@@ -84,15 +60,22 @@ public class SortingAlgorithmDemoLauncher {
         System.out.println(HORIZONTAL_LINE);
         while (selectedAlgoritm == null) {
             System.out.println(SELECT_SORTING_ALGORITHM);
+            
+            // muestra los algoritmos posibles a ejecutar
             for (SortingAlgorithm algorithm : SortingAlgorithm.values()) {
                 String menuItem = algorithm.ordinal() + ": " + algorithm.name();
                 System.out.println(menuItem);
             }
+            
+            
             try {
                 Scanner keyBoardInput = new Scanner(System.in);
                 int algorithmOrdinal = keyBoardInput.nextInt();
                 System.out.println();
+                
+                // Asigna en esta variable el algoritmo a ejecutar
                 selectedAlgoritm = SortingAlgorithm.values()[algorithmOrdinal];
+                
             } catch (Exception e) {
                 System.out.println(INVALID_INPUT);
             }
@@ -101,6 +84,7 @@ public class SortingAlgorithmDemoLauncher {
     }
 
     private static CustomTimeSeriesDataItem[] getDataToSort() {
+    	// this method fill the entire array of numbers
         int numberOfItems = 0;
         while (numberOfItems == 0) {
             try {
