@@ -31,6 +31,7 @@ import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 /**
  * Frame that shows the sorting algorithm process.
@@ -93,21 +94,26 @@ public class AlgorithmAnimationFrame extends JFrame implements
         menuBar.add(mnArchivo);
         
         
-        JPanel AnimationPanel = createDemoPanel();
-        AnimationPanel.setSize(new Dimension(500, 270));
-        MainPanel.add(AnimationPanel);
+
         
         JLabel lblVelocidad = new JLabel("Velocidad");
         lblVelocidad.setBounds(612, 361, 46, 14);
         MainPanel.add(lblVelocidad);
         
         JLabel lblMas = new JLabel("mas");
-        lblMas.setBounds(716, 361, 46, 14);
+        lblMas.setIcon(new ImageIcon(AlgorithmAnimationFrame.class.getResource("/images/mas.png")));
+        lblMas.setBounds(716, 352, 45, 43);
         MainPanel.add(lblMas);
         
         JLabel lblMenos = new JLabel("menos");
         lblMenos.setBounds(716, 414, 46, 14);
         MainPanel.add(lblMenos);
+        
+        
+        
+        JPanel AnimationPanel = createDemoPanel();
+        AnimationPanel.setSize(new Dimension(555, 383));
+        MainPanel.add(AnimationPanel);
     }
 
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
@@ -157,7 +163,7 @@ public class AlgorithmAnimationFrame extends JFrame implements
         IntervalXYDataset dataSet = startDataSet(dataToSort);
         JFreeChart chart = createChart(dataSet);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setLocation(40, 147);
+        chartPanel.setLocation(25, 61);
         return chartPanel;
     }
 
