@@ -28,10 +28,14 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.ui.ApplicationFrame;
 
 import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
+
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Frame that shows the sorting algorithm process.
@@ -39,8 +43,7 @@ import javax.swing.ImageIcon;
  * @author Carlos Gavidia (cgavidia@acm.org)
  * 
  */
-public class AlgorithmAnimationFrame extends JFrame implements
-        ArrayChangeListener<CustomTimeSeriesDataItem> {
+public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListener<CustomTimeSeriesDataItem>, ActionListener {
 
     private static final long serialVersionUID = -6451446062734426445L;
 
@@ -57,6 +60,9 @@ public class AlgorithmAnimationFrame extends JFrame implements
     private TimeSeriesDataItem[] dataToSort;
     private JPanel MainPanel, AnimationPanel;
     
+    private JButton Bubble,Insertion, Merge, Quick, btMas;
+    private JLabel lblAlgoritmosDeOrdenamiento;
+    
     /**
      * Gets an animation frame instance.
      * 
@@ -71,7 +77,7 @@ public class AlgorithmAnimationFrame extends JFrame implements
         super(frameTitle);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
-        setBounds(50, 50, 1000, 500);
+        setBounds(50, 50, 920, 500);
         this.frameTitle = frameTitle;
         this.sleepTime = sleepTime;
         this.dataToSort = dataToSort;
@@ -79,41 +85,65 @@ public class AlgorithmAnimationFrame extends JFrame implements
         setVisible(true);
         MainPanel = new JPanel();
         setContentPane(MainPanel);
-        MainPanel.setBackground(Color.GRAY);
+        MainPanel.setBackground(Color.LIGHT_GRAY);
         MainPanel.setBounds(0, 0, 1000, 600);
         MainPanel.setLayout(null);
 
  
-
-        
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBounds(0, 0, 1000, 25);
         MainPanel.add(menuBar);
         
         JMenu mnArchivo = new JMenu("Archivo");
         menuBar.add(mnArchivo);
-        
-        
 
-        
         JLabel lblVelocidad = new JLabel("Velocidad");
-        lblVelocidad.setBounds(612, 361, 46, 14);
+        lblVelocidad.setBounds(614, 309, 118, 32);
         MainPanel.add(lblVelocidad);
         
-        JLabel lblMas = new JLabel("mas");
-        lblMas.setIcon(new ImageIcon(AlgorithmAnimationFrame.class.getResource("/images/mas.png")));
-        lblMas.setBounds(716, 352, 45, 43);
-        MainPanel.add(lblMas);
+
         
         JLabel lblMenos = new JLabel("menos");
         lblMenos.setBounds(716, 414, 46, 14);
         MainPanel.add(lblMenos);
         
+        creaBotones();
+        lblAlgoritmosDeOrdenamiento = new JLabel("Algoritmos de Ordenamiento Disponibles");
+        lblAlgoritmosDeOrdenamiento.setBounds(587, 36, 317, 43);
+        MainPanel.add(lblAlgoritmosDeOrdenamiento);
         
-        
-        JPanel AnimationPanel = createDemoPanel();
+        AnimationPanel = createDemoPanel();
         AnimationPanel.setSize(new Dimension(555, 383));
         MainPanel.add(AnimationPanel);
+    }
+    
+    private void creaBotones(){
+        Bubble = new JButton("Bubble");
+        Bubble.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        Bubble.setBounds(672, 114, 159, 25);
+        MainPanel.add(Bubble);
+        
+        Insertion = new JButton("Insertion");
+        Insertion.setBounds(672, 169, 159, 25);
+        MainPanel.add(Insertion);
+        
+        Merge = new JButton("Merge");
+        Merge.setBounds(672, 222, 159, 25);
+        MainPanel.add(Merge);
+        
+        Quick = new JButton("Quick");
+        Quick.setBounds(672, 273, 159, 25);
+        MainPanel.add(Quick);
+        
+        btMas = new JButton("");
+        btMas.setBounds(716, 352, 45, 43);
+        //(new ImageIcon("src/Imagenes/Horse_1.gif")
+        btMas.setIcon(new ImageIcon(AlgorithmAnimationFrame.class.getResource("/images/mas.png")));
+        MainPanel.add(btMas);
+    	
     }
 
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
@@ -163,7 +193,8 @@ public class AlgorithmAnimationFrame extends JFrame implements
         IntervalXYDataset dataSet = startDataSet(dataToSort);
         JFreeChart chart = createChart(dataSet);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setLocation(25, 61);
+        chartPanel.setBackground(Color.LIGHT_GRAY);
+        chartPanel.setLocation(25, 77);
         return chartPanel;
     }
 
@@ -203,4 +234,10 @@ public class AlgorithmAnimationFrame extends JFrame implements
         return buffer.toString();
         */
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
