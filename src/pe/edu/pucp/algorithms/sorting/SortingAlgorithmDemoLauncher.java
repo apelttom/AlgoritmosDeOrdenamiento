@@ -6,9 +6,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import org.jfree.data.time.TimeSeriesDataItem;
 import org.jfree.data.time.Year;
 import org.jfree.ui.RefineryUtilities;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 import pe.edu.pucp.algorithms.sorting.algs.SorterFactory;
 import pe.edu.pucp.algorithms.sorting.algs.SortingAlgorithm;
@@ -20,29 +22,30 @@ import pe.edu.pucp.algorithms.sorting.graph.CustomTimeSeriesDataItem;
  * with the responsability of instantiating the Algorithm frame.
  * 
  * @author Carlos Gavidia (cgavidia@acm.org)
- * 
+ * @author TomÃ¡Å¡ Apeltauer
  */
 public class SortingAlgorithmDemoLauncher {
 
-    private static final String INVALID_INPUT = "ERROR: El valor ingresado es inválido.\n";
+    private static final String INVALID_INPUT = "ERROR: El valor ingresado es invï¿½lido.\n";
     private static final String HORIZONTAL_LINE = "==============================";
     private static final String TITLE = "Algoritmo de Ordenamiento";
     private static final String APPLICATION_TITLE = "Demo: Algoritmos de Ordenamiento";
     private static final String SELECT_SORTING_ALGORITHM = "Seleccione el algoritmo de ordenamiento (del 0 al 5):";
-    private static final String EXECUTION_TIME_MESSAGE = "Tiempo de ejecución del algoritmo (segundos): ";
-    private static final String SELECT_NUMBER_OF_ITEMS = "Seleccione el número de elementos a ordenar:";
+    private static final String EXECUTION_TIME_MESSAGE = "Tiempo de ejecuciï¿½n del algoritmo (segundos): ";
+    private static final String SELECT_NUMBER_OF_ITEMS = "Seleccione el nï¿½mero de elementos a ordenar:";
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         SortingAlgorithm selectedAlgoritm = getSelectedAlgorithm();  // Algorithm Input
         int sleepTime = 10; // Thread Sleep
-        CustomTimeSeriesDataItem[] dataToSort = getDataToSort(); // This fill the data 
+//        CustomTimeSeriesDataItem[] dataToSort = getDataToSort(); // This fill the data
+        DLList<TimeSeriesDataItem> dataToSort = getDataToSortList();
         
         // creates the JPanel that animates the sorting algorithm
         AlgorithmAnimationFrame algorithmAnimationFrame = new AlgorithmAnimationFrame(selectedAlgoritm.name(), dataToSort, sleepTime); 
         algorithmAnimationFrame.setVisible(true);
-        BaseSorter<CustomTimeSeriesDataItem> sorter = SorterFactory.getSorter(CustomTimeSeriesDataItem.class, dataToSort, selectedAlgoritm);
-        sorter.setArrayChangeListener(algorithmAnimationFrame);
+        BaseSorter<CustomTimeSeriesDataItem> sorter = SorterFactory.getSorter(TimeSeriesDataItem.class, dataToSort, selectedAlgoritm);
+        sorter.setDLListChangeListener(algorithmAnimationFrame);
 
         long startTime = System.nanoTime();
 
@@ -104,5 +107,27 @@ public class SortingAlgorithmDemoLauncher {
         }
         return dataToSort.toArray(new CustomTimeSeriesDataItem[dataToSort
                 .size()]);
+    }
+    
+    private static DLList<TimeSeriesDataItem> getDataToSortList() {
+    	// this method fill the entire array of numbers
+        int numberOfItems = 0;
+        while (numberOfItems == 0) {
+            try {
+                System.out.println(SELECT_NUMBER_OF_ITEMS);
+                Scanner keyBoardInput = new Scanner(System.in);
+                numberOfItems = keyBoardInput.nextInt();
+                System.out.println();
+            } catch (Exception e) {
+                System.out.println(INVALID_INPUT);
+            }
+        }
+        DLList<TimeSeriesDataItem> dataToSort = new DLList<>();
+        Random random = new Random();
+        for (int i = 1; i <= numberOfItems; i++) {
+            dataToSort.addLast(new CustomTimeSeriesDataItem(new Year(i),
+                    new Integer(random.nextInt(100) + 1)));
+        }
+        return dataToSort;
     }
 }

@@ -24,7 +24,9 @@ import org.jfree.data.time.TimeSeriesDataItem;
 import org.jfree.data.time.Year;
 import org.jfree.data.xy.IntervalXYDataset;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
+import pe.edu.pucp.algorithms.sorting.algs.DLListChangedListerner;
 
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
@@ -41,19 +43,20 @@ import javax.swing.JMenuItem;
  * Frame that shows the sorting algorithm process.
  * 
  * @author Carlos Gavidia (cgavidia@acm.org)
+ * @author TomÃ¡Å¡ Apeltauer
  * 
  */
 @SuppressWarnings("serial")
-public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListener<CustomTimeSeriesDataItem>, ActionListener {
+public class AlgorithmAnimationFrame extends JFrame implements DLListChangedListerner<CustomTimeSeriesDataItem>, ActionListener {
 
-    private static final String X_LABEL = "Índice";
-    private static final String Y_LABEL = "Tamaño";
+    private static final String X_LABEL = "ï¿½ndice";
+    private static final String Y_LABEL = "Tamaï¿½o";
     private static final String BAR_LABEL = "Elemento en el arreglo";
 
     private TimeSeries timeSeries;
     private String frameTitle;
     private int sleepTime;
-    private TimeSeriesDataItem[] dataToSort;
+    private DLList<TimeSeriesDataItem> dataToSort;
     private JPanel MainPanel, AnimationPanel;
     
     private JButton Bubble,Insertion, Merge, Quick, btMas;
@@ -70,7 +73,7 @@ public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListen
      * @param sleepTime
      *            Delay time for sorting.
      */
-    public AlgorithmAnimationFrame(String frameTitle, TimeSeriesDataItem[] dataToSort, int sleepTime) {
+    public AlgorithmAnimationFrame(String frameTitle, DLList<TimeSeriesDataItem> dataToSort, int sleepTime) {
         super(frameTitle);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -161,9 +164,9 @@ public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListen
         return jfreechart;
     }
 
-    private IntervalXYDataset startDataSet(TimeSeriesDataItem[] dataAsArray) {
+    private IntervalXYDataset startDataSet(DLList<TimeSeriesDataItem> dataAsList) {
         timeSeries = new TimeSeries(BAR_LABEL, X_LABEL, "Count");
-        for (TimeSeriesDataItem dataItem : dataAsArray) {
+        for (TimeSeriesDataItem dataItem : dataAsList) {
             timeSeries.add(dataItem);
         }
         TimeSeriesCollection timeseriescollection = new TimeSeriesCollection(timeSeries);
@@ -176,13 +179,17 @@ public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListen
      * @param dataAsArray
      *            New data to show.
      */
-    public void updateDataSet(CustomTimeSeriesDataItem[] dataAsArray) {
+    public void updateDataSet(DLList<CustomTimeSeriesDataItem> data) {
         timeSeries.clear();
         int currentItem = 1;
-        for (CustomTimeSeriesDataItem dataItem : dataAsArray) {
-            timeSeries.addOrUpdate(new Year(currentItem), dataItem.getValue());
+        for (CustomTimeSeriesDataItem dataItem : data) {
+        	timeSeries.addOrUpdate(new Year(currentItem), dataItem.getValue());
             currentItem++;
-        }
+		}
+//        for (CustomTimeSeriesDataItem dataItem : dataAsArray) {
+//            timeSeries.addOrUpdate(new Year(currentItem), dataItem.getValue());
+//            currentItem++;
+//        }
     }
 
     public JPanel createDemoPanel() {
@@ -201,7 +208,7 @@ public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListen
      * pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener#arrayChanged(T[])
      */
     @Override
-    public void arrayChanged(final CustomTimeSeriesDataItem[] dataArray) {
+    public void listChanged(final DLList<CustomTimeSeriesDataItem> data) {
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
@@ -210,7 +217,7 @@ public class AlgorithmAnimationFrame extends JFrame implements ArrayChangeListen
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                updateDataSet(dataArray);
+                updateDataSet(data);
             }
         });
     }

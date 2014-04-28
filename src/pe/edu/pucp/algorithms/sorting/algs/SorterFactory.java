@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.impl.BottomUpMergeSorter;
 import pe.edu.pucp.algorithms.sorting.algs.impl.BubbleSorter;
 import pe.edu.pucp.algorithms.sorting.algs.impl.CombSorter;
@@ -31,9 +32,10 @@ public class SorterFactory {
      * @return
      */
     public static <T extends Comparable<T>> BaseSorter<T> getSorter(
-            Class<T> clazz, T[] data, SortingAlgorithm algorithm) {
+            Class<T> clazz, DLList<T> data, SortingAlgorithm algorithm) {
         BaseSorter<T> sorter = null;
 
+        //TODO repair functionality for DLList
         switch (algorithm) {
         case INSERTION:
             sorter = new InsertionSorter<T>(clazz, data);

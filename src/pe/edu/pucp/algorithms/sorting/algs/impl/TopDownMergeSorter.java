@@ -1,5 +1,7 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
+
 /**
  * Implementation of Top-Down Merge Sort algorithm. Based on the implementation
  * described in Robert Sedgewick's Algorithm book.
@@ -11,7 +13,7 @@ package pe.edu.pucp.algorithms.sorting.algs.impl;
  */
 public class TopDownMergeSorter<T extends Comparable<T>> extends MergeSorter<T> {
 
-    public TopDownMergeSorter(Class<T> clazz, T[] data) {
+    public TopDownMergeSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 
@@ -34,6 +36,7 @@ public class TopDownMergeSorter<T extends Comparable<T>> extends MergeSorter<T> 
      *            Higher index.
      */
     private void sortData(int lowerIndex, int higherIndex) {
+        //TODO repair functionality for DLList
         if (higherIndex <= lowerIndex) {
             return;
         }

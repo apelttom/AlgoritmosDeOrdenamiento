@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -13,7 +14,7 @@ import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
  */
 public class QuickSorter<T extends Comparable<T>> extends BaseSorter<T> {
 
-    public QuickSorter(Class<T> clazz, T[] data) {
+    public QuickSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 
@@ -54,6 +55,7 @@ public class QuickSorter<T extends Comparable<T>> extends BaseSorter<T> {
      * @return
      */
     private int partition(int lowerIndex, int higherIndex) {
+        //TODO repair functionality for DLList
         int leftScanner = lowerIndex;
         int rightScanner = higherIndex + 1;
         T pivotItem = getDataAtIndex(lowerIndex);

@@ -2,6 +2,7 @@ package pe.edu.pucp.algorithms.sorting.algs.impl;
 
 import java.lang.reflect.Array;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -15,7 +16,7 @@ import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 public abstract class MergeSorter<T extends Comparable<T>> extends
         BaseSorter<T> {
 
-    public MergeSorter(Class<T> clazz, T[] data) {
+    public MergeSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
 
     }
@@ -34,7 +35,7 @@ public abstract class MergeSorter<T extends Comparable<T>> extends
      */
     @SuppressWarnings("unchecked")
     protected void merge(int lowerIndex, int midIndex, int higherIndex) {
-
+        //TODO repair functionality for DLList
         int leftArrayMarker = lowerIndex;
         int rightArrayMarker = midIndex + 1;
 

@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -13,7 +14,7 @@ import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
  */
 public class InsertionSorter<T extends Comparable<T>> extends BaseSorter<T> {
 
-    public InsertionSorter(Class<T> clazz, T[] data) {
+    public InsertionSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 
@@ -24,6 +25,7 @@ public class InsertionSorter<T extends Comparable<T>> extends BaseSorter<T> {
      */
     @Override
     public void sortData() {
+        //TODO repair functionality for DLList
         for (int currentIndex = 0; currentIndex < getLength(); currentIndex++) {
             T currentItem = getDataAtIndex(currentIndex);
             int auxIndex = currentIndex;

@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -14,10 +15,11 @@ import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 public class OddEvenTranspositionSorter<T extends Comparable<T>> extends
         BaseSorter<T> {
 
-    public OddEvenTranspositionSorter(Class<T> clazz, T[] data) {
+    public OddEvenTranspositionSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 
+    //TODO repair functionality for DLList
     @Override
     public void sortData() {
         for (int i = 0; i < getLength() / 2; i++) {
