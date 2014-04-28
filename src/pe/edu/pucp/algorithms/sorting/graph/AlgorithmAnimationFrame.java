@@ -69,13 +69,14 @@ public class AlgorithmAnimationFrame extends JFrame implements DLListChangedList
      * @param sleepTime
      *            Delay time for sorting.
      */
-    public AlgorithmAnimationFrame(String frameTitle, DLList<TimeSeriesDataItem> dataToSort, int sleepTime) {
-        super(frameTitle);
+
+    public AlgorithmAnimationFrame(String frameTitle, DLList<TimeSeriesDataItem> dataToSort) {
+        super("Sorting Algorithms");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setBounds(50, 50, 920, 500);
         this.frameTitle = frameTitle;
-        this.sleepTime = sleepTime;
+        this.sleepTime = 10;
         this.dataToSort = dataToSort;
         setResizable(false);
         setVisible(true);
@@ -105,13 +106,11 @@ public class AlgorithmAnimationFrame extends JFrame implements DLListChangedList
         MainPanel.add(lblMenos);
         
         creaBotones();
+        
         lblAlgoritmosDeOrdenamiento = new JLabel("Algoritmos de Ordenamiento Disponibles");
         lblAlgoritmosDeOrdenamiento.setBounds(614, 36, 317, 43);
         MainPanel.add(lblAlgoritmosDeOrdenamiento);
-        
-        AnimationPanel = createDemoPanel();
-        AnimationPanel.setSize(new Dimension(555, 383));
-        MainPanel.add(AnimationPanel);
+               
     }
     
     private void creaBotones(){
@@ -142,6 +141,11 @@ public class AlgorithmAnimationFrame extends JFrame implements DLListChangedList
     	
     }
 
+    private void prueba(){
+        AnimationPanel = createDemoPanel();
+        AnimationPanel.setSize(new Dimension(555, 383));
+        MainPanel.add(AnimationPanel);
+    }
     private JFreeChart createChart(IntervalXYDataset intervalxydataset) {
         JFreeChart jfreechart = ChartFactory.createXYBarChart(frameTitle, X_LABEL, true, Y_LABEL, intervalxydataset, PlotOrientation.VERTICAL, true, false, false);
         jfreechart.setBackgroundPaint(Color.white);
@@ -237,6 +241,10 @@ public class AlgorithmAnimationFrame extends JFrame implements DLListChangedList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == Bubble){
+			System.out.println("Bubble");
+			prueba();
+			
+		}
 	}
 }
