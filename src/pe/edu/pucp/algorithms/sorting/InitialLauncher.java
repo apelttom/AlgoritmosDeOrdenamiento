@@ -1,22 +1,29 @@
 package pe.edu.pucp.algorithms.sorting;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
-public class InitialLauncher extends JFrame {
+@SuppressWarnings("serial")
+public class InitialLauncher extends JFrame implements ActionListener {
 
 	private JPanel MainContainer;
 	private JTextField txtElements;
+	private JButton btnContinuar;
+	private JMenuItem New, Exit;
 
 	/**
 	 * Launch the application.
@@ -46,6 +53,28 @@ public class InitialLauncher extends JFrame {
 		setContentPane(MainContainer);
 		MainContainer.setLayout(null);
 		
+		createMenuBar();
+
+		JLabel lblElements = new JLabel("Elementos en el Arreglo");
+		lblElements.setBounds(43, 164, 246, 48);
+		MainContainer.add(lblElements);
+		
+		txtElements = new JTextField();
+		txtElements.setBounds(234, 181, 236, 48);
+		MainContainer.add(txtElements);
+		txtElements.setColumns(10);
+		
+		JLabel tittle = new JLabel("Bienvenido a Sorting Algoritms");
+		tittle.setBounds(83, 36, 402, 63);
+		MainContainer.add(tittle);
+		
+		btnContinuar = new JButton("Continuar");
+		btnContinuar.setBounds(285, 277, 165, 48);
+		btnContinuar.addActionListener(this);
+		MainContainer.add(btnContinuar);
+	}
+	
+	private void createMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 590, 25);
 		MainContainer.add(menuBar);
@@ -53,23 +82,20 @@ public class InitialLauncher extends JFrame {
 		JMenu mnArchivo = new JMenu("Archivo");
 		menuBar.add(mnArchivo);
 		
-		JMenuItem New = new JMenuItem("Nuevo");
+		New = new JMenuItem("Nuevo");
 		mnArchivo.add(New);
 		
-		JMenuItem Exit = new JMenuItem("Salir");
+		Exit = new JMenuItem("Salir");
 		mnArchivo.add(Exit);
 		
-		JLabel lblElements = new JLabel("Elementos en el Arreglo");
-		lblElements.setBounds(43, 164, 246, 48);
-		MainContainer.add(lblElements);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == btnContinuar){
+			System.out.println("next frame");
+		}
 		
-		txtElements = new JTextField();
-		txtElements.setBounds(232, 212, 236, 48);
-		MainContainer.add(txtElements);
-		txtElements.setColumns(10);
-		
-		JLabel tittle = new JLabel("Bienvenido a Sorting Algoritms");
-		tittle.setBounds(83, 36, 402, 63);
-		MainContainer.add(tittle);
 	}
 }
