@@ -25,9 +25,6 @@ import pe.edu.pucp.algorithms.sorting.graph.CustomTimeSeriesDataItem;
 public class SortingAlgorithmDemoLauncher {
 
     private static final String INVALID_INPUT = "ERROR: El valor ingresado es inválido.\n";
-    private static final String HORIZONTAL_LINE = "==============================";
-    private static final String TITLE = "Algoritmo de Ordenamiento";
-    private static final String APPLICATION_TITLE = "Demo: Algoritmos de Ordenamiento";
     private static final String SELECT_SORTING_ALGORITHM = "Seleccione el algoritmo de ordenamiento (del 0 al 5):";
     private static final String EXECUTION_TIME_MESSAGE = "Tiempo de ejecución del algoritmo (segundos): ";
     private static final String SELECT_NUMBER_OF_ITEMS = "Seleccione el número de elementos a ordenar:";
@@ -56,8 +53,6 @@ public class SortingAlgorithmDemoLauncher {
 
     private static SortingAlgorithm getSelectedAlgorithm() {
         SortingAlgorithm selectedAlgoritm = null;
-        System.out.println(APPLICATION_TITLE);
-        System.out.println(HORIZONTAL_LINE);
         while (selectedAlgoritm == null) {
             System.out.println(SELECT_SORTING_ALGORITHM);
             
