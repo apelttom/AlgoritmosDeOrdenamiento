@@ -19,7 +19,6 @@ public class OddEvenTranspositionSorter<T extends Comparable<T>> extends
         super(clazz, data);
     }
 
-    //TODO repair functionality for DLList
     @Override
     public void sortData() {
         for (int i = 0; i < getLength() / 2; i++) {

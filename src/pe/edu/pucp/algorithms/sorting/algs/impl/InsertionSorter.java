@@ -25,7 +25,6 @@ public class InsertionSorter<T extends Comparable<T>> extends BaseSorter<T> {
      */
     @Override
     public void sortData() {
-        //TODO repair functionality for DLList
         for (int currentIndex = 0; currentIndex < getLength(); currentIndex++) {
             T currentItem = getDataAtIndex(currentIndex);
             int auxIndex = currentIndex;

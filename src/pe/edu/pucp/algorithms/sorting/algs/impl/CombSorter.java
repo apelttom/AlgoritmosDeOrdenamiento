@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -15,7 +16,7 @@ public class CombSorter<T extends Comparable<T>> extends BaseSorter<T> {
 
     private final float SHRINK_FACTOR = (float) 1.3;
 
-    public CombSorter(Class<T> clazz, T[] data) {
+    public CombSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 

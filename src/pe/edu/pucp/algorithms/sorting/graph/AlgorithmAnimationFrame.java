@@ -2,10 +2,18 @@ package pe.edu.pucp.algorithms.sorting.graph;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -25,19 +33,7 @@ import org.jfree.data.time.Year;
 import org.jfree.data.xy.IntervalXYDataset;
 
 import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
-import pe.edu.pucp.algorithms.sorting.algs.ArrayChangeListener;
 import pe.edu.pucp.algorithms.sorting.algs.DLListChangedListerner;
-
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JMenuItem;
 
 /**
  * Frame that shows the sorting algorithm process.

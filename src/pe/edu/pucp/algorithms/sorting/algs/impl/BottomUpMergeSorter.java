@@ -1,5 +1,7 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
+
 /**
  * Implementation of Bottom-Up Merge Sort algorithm. Based on the implementation
  * described in Robert Sedgewick's Algorithm book.
@@ -12,7 +14,7 @@ package pe.edu.pucp.algorithms.sorting.algs.impl;
 public class BottomUpMergeSorter<T extends Comparable<T>> extends
         MergeSorter<T> {
 
-    public BottomUpMergeSorter(Class<T> clazz, T[] data) {
+    public BottomUpMergeSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 

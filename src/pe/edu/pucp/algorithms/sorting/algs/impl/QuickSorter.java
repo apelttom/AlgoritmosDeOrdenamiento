@@ -55,7 +55,6 @@ public class QuickSorter<T extends Comparable<T>> extends BaseSorter<T> {
      * @return
      */
     private int partition(int lowerIndex, int higherIndex) {
-        //TODO repair functionality for DLList
         int leftScanner = lowerIndex;
         int rightScanner = higherIndex + 1;
         T pivotItem = getDataAtIndex(lowerIndex);

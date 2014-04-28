@@ -1,5 +1,6 @@
 package pe.edu.pucp.algorithms.sorting.algs.impl;
 
+import pe.edu.pucp.algorithms.sorting.DLinkedList.DLList;
 import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
 
 /**
@@ -15,7 +16,7 @@ import pe.edu.pucp.algorithms.sorting.algs.BaseSorter;
  */
 public class SeveralUniqueSorter<T extends Comparable<T>> extends BaseSorter<T> {
 
-    public SeveralUniqueSorter(Class<T> clazz, T[] data) {
+    public SeveralUniqueSorter(Class<T> clazz, DLList<T> data) {
         super(clazz, data);
     }
 

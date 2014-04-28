@@ -36,7 +36,6 @@ public class TopDownMergeSorter<T extends Comparable<T>> extends MergeSorter<T> 
      *            Higher index.
      */
     private void sortData(int lowerIndex, int higherIndex) {
-        //TODO repair functionality for DLList
         if (higherIndex <= lowerIndex) {
             return;
         }

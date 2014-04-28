@@ -35,7 +35,6 @@ public class SorterFactory {
             Class<T> clazz, DLList<T> data, SortingAlgorithm algorithm) {
         BaseSorter<T> sorter = null;
 
-        //TODO repair functionality for DLList
         switch (algorithm) {
         case INSERTION:
             sorter = new InsertionSorter<T>(clazz, data);

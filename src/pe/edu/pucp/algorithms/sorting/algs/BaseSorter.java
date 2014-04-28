@@ -139,8 +139,8 @@ public abstract class BaseSorter<T extends Comparable> {
 	 */
 	protected void setDataAtIndex(int index, T item) {
 		data.set(index, item);
-		
 //		data[index] = item;
+		
 		listChangeListener.listChanged(data);
 	}
 
